@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 public class Main {
@@ -5,7 +7,7 @@ public class Main {
         Inputter inputter = new Inputter();
         Displayer displayer = new Displayer();
         Scanner scan = new Scanner(System.in);
-        Student student = null;
+        List<Student> students = new ArrayList<>(); // list to manage multiple students
         Course course = null;
 
         while (true) {
@@ -21,13 +23,14 @@ public class Main {
             System.out.println("8. View Course Details");
             System.out.println("9. Update Student Type");
             System.out.println("0. Exit");
-            System.out.print("Enter your choice: ");
+            System.out.print("\nEnter your choice: ");
             int choice = scan.nextInt();
             scan.nextLine(); // consume newline left-over
 
             switch (choice) {
                 case 1:
-                    student = inputter.createStudent();
+                    Student student = inputter.createStudent();
+                    students.add(student);
                     System.out.println("Student created successfully!");
                     break;
                 case 2:
@@ -35,55 +38,64 @@ public class Main {
                     System.out.println("Course created successfully!");
                     break;
                 case 3:
-                    if (student == null) {
-                        System.out.println("Please create a student first.");
+                    if (students.isEmpty()) {
+                        System.out.println("No students available. Please create a student first.");
                     } else if (course == null) {
                         System.out.println("Please create a course first.");
                     } else {
-                        if (student instanceof RegularStudent) {
-                            RegularStudent regularStudent = (RegularStudent) student;
-                            if (regularStudent.getCourses().size() < 2) { // segular students can enroll in only one block
+                        Student selectedStudent = selectStudent(students, scan); // to select a student from the list
+                        if (selectedStudent instanceof RegularStudent) {
+                            RegularStudent regularStudent = (RegularStudent) selectedStudent;
+                            if (regularStudent.getCourses().size() < 2) {
                                 regularStudent.enroll(course);
                                 System.out.println("Regular student enrolled in course: " + course.getDetails());
                             } else {
                                 System.out.println("Regular students cannot enroll in additional courses.");
                             }
-                        } else { // irregular students
-                            student.enroll(course);
+                        } else {
+                            selectedStudent.enroll(course);
                             System.out.println("Irregular student enrolled in course: " + course.getDetails());
                         }
                     }
                     break;
                 case 4:
-                    if (student != null && course != null) {
-                        double grade = inputter.getGradeInput();
-                        course.assignGrade(student, grade);
-                        System.out.println("Grade assigned successfully!");
-                    } else {
+                    if (students.isEmpty() || course == null) {
                         System.out.println("Please create a student and a course first.");
+                    } else {
+                        Student selectedStudent = selectStudent(students, scan);
+                        double grade = inputter.getGradeInput();
+                        course.assignGrade(selectedStudent, grade);
+                        System.out.println("Grade assigned successfully!");
                     }
                     break;
                 case 5:
-                    if (student != null && course != null) {
-                        student.dropCourse(course);
-                        System.out.println("Course dropped successfully!");
-                    } else {
+                    if (students.isEmpty() || course == null) {
                         System.out.println("Please create a student and a course first.");
+                    } else {
+                        Student selectedStudent = selectStudent(students, scan);
+                        selectedStudent.dropCourse(course);
+                        System.out.println("Course dropped successfully!");
                     }
                     break;
                 case 6:
-                    if (student instanceof RegularStudent) {
-                        ((RegularStudent) student).dropBlock();
-                        System.out.println("All courses in block dropped successfully!");
+                    if (students.isEmpty()) {
+                        System.out.println("No students available.");
                     } else {
-                        System.out.println("Only regular students can drop all courses in their block.");
+                        Student selectedStudent = selectStudent(students, scan);
+                        if (selectedStudent instanceof RegularStudent) {
+                            ((RegularStudent) selectedStudent).dropBlock();
+                            System.out.println("All courses in block dropped successfully!");
+                        } else {
+                            System.out.println("Only regular students can drop all courses in their block.");
+                        }
                     }
                     break;
                 case 7:
-                    if (student != null) {
-                        displayer.displayStudentDetails(student);
+                    if (students.isEmpty()) {
+                        System.out.println("No students available.");
                     } else {
-                        System.out.println("Please create a student first.");
+                        Student selectedStudent = selectStudent(students, scan);
+                        displayer.displayStudentDetails(selectedStudent);
                     }
                     break;
                 case 8:
@@ -94,23 +106,35 @@ public class Main {
                     }
                     break;
                 case 9:
-                    if (student != null) {
+                    if (students.isEmpty()) {
+                        System.out.println("No students available.");
+                    } else {
+                        Student selectedStudent = selectStudent(students, scan);
                         System.out.print("Enter new type (Regular/Irregular): ");
                         String newType = scan.nextLine();
-                        student.updateType(newType);
+                        selectedStudent.updateType(newType);
                         System.out.println("Student type updated to: " + newType);
-                    } else {
-                        System.out.println("Please create a student first.");
                     }
                     break;
                 case 0:
                     System.out.println("Exiting the system. Goodbye!");
                     inputter.close();
                     scan.close();
-                    return; // Exit the program
+                    return;
                 default:
                     System.out.println("Invalid choice! Please try again.");
             }
         }
+    }
+
+    // method to select a student from the list
+    private static Student selectStudent(List<Student> students, Scanner scan) {
+        System.out.println("Select a student:");
+        for (int i = 0; i < students.size(); i++) {
+            System.out.println((i + 1) + ". " + students.get(i).getDetails());
+        }
+        int selectedIndex = scan.nextInt() - 1;
+        scan.nextLine();
+        return students.get(selectedIndex);
     }
 }
