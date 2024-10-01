@@ -8,7 +8,7 @@ public class Course {
     private List<Grade> grades;
 
     // constructor
-    public Course(String courseName, String courseCode, String day, String time) {
+    public Course(String courseName, String courseCode) {
         this.courseName = courseName;
         this.courseCode = courseCode;
         this.schedules = new ArrayList<>();
@@ -54,6 +54,6 @@ public class Course {
 
     // to display the details of the course
     public String getDetails() {
-        return "\nCourse Name: " + courseName + "\nCourse Code: " + courseCode + "\nDay: " + day + ", Time: " + time;
+        return "\nCourse Name: " + courseName + "\nCourse Code: " + courseCode;
     }
 }
