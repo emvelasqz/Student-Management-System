@@ -4,26 +4,45 @@ import java.util.List;
 public class Course {
     private String courseName;
     private String courseCode;
-    private String day;
-    private String time;
+    private List<Schedule> schedules;
     private List<Grade> grades;
 
     // constructor
     public Course(String courseName, String courseCode, String day, String time) {
         this.courseName = courseName;
         this.courseCode = courseCode;
-        this.day = day;
-        this.time = time;
+        this.schedules = new ArrayList<>();
         this.grades = new ArrayList<>();
     }
 
-    // a method to attach a grade in the course
+    // methods
+
+    public void addSchedule(Schedule schedule) {
+        schedules.add(schedule);
+    }
+
+    public void viewSchedules() {
+        for (Schedule schedule : schedules) {
+            System.out.println(schedule.getScheduleDetails());
+        }
+    }
+
+    public void updateSchedule(int index, String newDay, String newTime, String newBlock) {
+        if (index >= 0 && index < schedules.size()) {
+            Schedule schedule = schedules.get(index);
+            schedule.updateDay(newDay);
+            schedule.updateTime(newTime);
+            schedule.updateBlock(newBlock);
+        } else {
+            System.out.println("Invalid schedule.");
+        }
+    }
+
     public void assignGrade(Student student, double gradeValue) {
         Grade grade = new Grade(this, student, gradeValue);
         grades.add(grade);
     }
 
-    // to retrieve grade of a student in a course
     public Grade getGradeForStudent(Student student) {
         for (Grade grade : grades) {
             if (grade.getStudent().equals(student)) {
