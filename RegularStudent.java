@@ -9,7 +9,7 @@ public class RegularStudent extends Student {
     }
 
     // method to retrieve block
-    public getBlock() {
+    public String getBlock() {
         return block;
     }
 
@@ -28,6 +28,10 @@ public class RegularStudent extends Student {
             enroll(new Course("Physical Education 3", "9211", "Friday", "2:00 PM"));
             enroll(new Course("Ethics", "2071", "Monday", "3:00 PM"));
         }
+    }
+
+    public void dropBlock() {
+        this.courses.clear(); // drop all courses
     }
 
     @Override
