@@ -2,6 +2,7 @@ public class Displayer {
     // methods to display in the main class
     public void displayStudentDetails(Student student) {
         System.out.println(student.getDetails());
+        
         System.out.println("Enrolled Courses:");
         for (Course course : student.getCourses()) {
             Grade grade = course.getGradeForStudent(student);
@@ -10,6 +11,9 @@ public class Displayer {
             } else {
                 System.out.println(course.getDetails() + " - Grade: Not assigned");
             }
+
+            System.out.println("Course Schedule:");
+            course.viewSchedules();
         }
         System.out.println("Total Amount: " + student.calculateTotalFees());
     }
