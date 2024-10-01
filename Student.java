@@ -28,6 +28,10 @@ public abstract class Student {
         return "Name: " + name + "\nID: " + studentID + "\nType: " + type;
     }
 
+    public void updateType(String type) {
+        this.type = type;
+    }
+
     public void dropCourse(Course course) {
         courses.remove(course);
     }
