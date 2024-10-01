@@ -4,7 +4,7 @@ import java.util.List;
 public class Course {
     private String courseName;
     private String courseCode;
-    private Schedule schedule;
+    private List<Schedule> schedules;
     private List<Grade> grades;
 
     // constructor
@@ -12,12 +12,23 @@ public class Course {
         this.courseName = courseName;
         this.courseCode = courseCode;
         this.grades = new ArrayList<>();
+        this.schedules = new ArrayList<>();
     }
 
     // methods
+    public void addSchedule(Schedule schedule) {
+        schedules.add(schedule);
+    }
+    
     public void viewSchedules() {
-        System.out.println(schedule.getScheduleDetails());
+        if (schedules.isEmpty()) {
+            System.out.println("No schedules available for this course.");
+            return;
+        }
         
+        for (Schedule schedule : schedules) {
+            System.out.println(schedule.getScheduleDetails());
+        }
     }
 
     public void assignGrade(Student student, double gradeValue) {

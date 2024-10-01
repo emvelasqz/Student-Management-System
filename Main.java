@@ -35,16 +35,23 @@ public class Main {
                     System.out.println("Course created successfully!");
                     break;
                 case 3:
-                    if (student instanceof RegularStudent) {
-                        if (student.getCourses().size() < 2) { // Regular students can enroll only in their predefined courses
-                            student.enroll(course);
-                            System.out.println("Student enrolled in course: " + course.getDetails());
-                        } else {
-                            System.out.println("Regular students can only enroll in their predefined courses.");
-                        }
+                    if (student == null) {
+                        System.out.println("Please create a student first.");
+                    } else if (course == null) {
+                        System.out.println("Please create a course first.");
                     } else {
-                        student.enroll(course);
-                        System.out.println("Student enrolled in course: " + course.getDetails());
+                        if (student instanceof RegularStudent) {
+                            RegularStudent regularStudent = (RegularStudent) student;
+                            if (regularStudent.getCourses().size() < 2) { // segular students can enroll in only one block
+                                regularStudent.enroll(course);
+                                System.out.println("Regular student enrolled in course: " + course.getDetails());
+                            } else {
+                                System.out.println("Regular students cannot enroll in additional courses.");
+                            }
+                        } else { // irregular students
+                            student.enroll(course);
+                            System.out.println("Irregular student enrolled in course: " + course.getDetails());
+                        }
                     }
                     break;
                 case 4:
