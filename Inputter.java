@@ -27,15 +27,15 @@ public class Inputter {
         String courseName = scan.nextLine();
         System.out.println("Enter Course Code:");
         String courseCode = scan.nextLine();
-        return new Course(courseName, courseCode);
+        return new Course(courseName, courseCode, createSchedule());
     }
 
     public Schedule createSchedule() {
-        System.out.println("Enter Day:");
+        System.out.println("Enter Day: ");
         String day = scan.nextLine();
-        System.out.println("Enter Time:");
+        System.out.println("Enter Time: ");
         String time = scan.nextLine();
-        System.out.println("Enter Block:");
+        System.out.println("Enter Block: ");
         String block = scan.nextLine();
         return new Schedule(day, time, block);
     }
