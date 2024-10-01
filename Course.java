@@ -4,38 +4,20 @@ import java.util.List;
 public class Course {
     private String courseName;
     private String courseCode;
-    private List<Schedule> schedules;
+    private Schedule schedule;
     private List<Grade> grades;
 
     // constructor
     public Course(String courseName, String courseCode) {
         this.courseName = courseName;
         this.courseCode = courseCode;
-        this.schedules = new ArrayList<>();
         this.grades = new ArrayList<>();
     }
 
     // methods
-
-    public void addSchedule(Schedule schedule) {
-        schedules.add(schedule);
-    }
-
     public void viewSchedules() {
-        for (Schedule schedule : schedules) {
-            System.out.println(schedule.getScheduleDetails());
-        }
-    }
-
-    public void updateSchedule(int index, String newDay, String newTime, String newBlock) {
-        if (index >= 0 && index < schedules.size()) {
-            Schedule schedule = schedules.get(index);
-            schedule.updateDay(newDay);
-            schedule.updateTime(newTime);
-            schedule.updateBlock(newBlock);
-        } else {
-            System.out.println("Invalid schedule.");
-        }
+        System.out.println(schedule.getScheduleDetails());
+        
     }
 
     public void assignGrade(Student student, double gradeValue) {
