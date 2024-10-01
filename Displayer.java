@@ -16,5 +16,7 @@ public class Displayer {
 
     public void displayCourseDetails(Course course) {
         System.out.println(course.getDetails());
+        System.out.println("Schedules:");
+        course.viewSchedules();
     }
 }
