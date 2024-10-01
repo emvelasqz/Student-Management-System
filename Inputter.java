@@ -27,7 +27,19 @@ public class Inputter {
         String courseName = scan.nextLine();
         System.out.println("Enter Course Code:");
         String courseCode = scan.nextLine();
-        return new Course(courseName, courseCode, createSchedule());
+        Course course = new Course(courseName, courseCode, createSchedule());
+
+        System.out.print("Do you want to add a schedule to this course? (y/n): ");
+        String addSchedule = scan.nextLine();
+        
+        while (addSchedule.equalsIgnoreCase("y")) {
+            Schedule schedule = createSchedule();
+            course.addSchedule(schedule);
+            System.out.print("Do you want to add another schedule? (y/n): ");
+            addSchedule = scan.nextLine();
+        }
+
+        return course;
     }
 
     public Schedule createSchedule() {
