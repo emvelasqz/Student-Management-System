@@ -143,10 +143,10 @@ public class Main {
 
     // method to select a student from the list
     private static Student selectStudent(List<Student> students, Scanner scan) {
-        System.out.print("Select a student: ");
         for (int i = 0; i < students.size(); i++) {
             System.out.println((i + 1) + ". " + students.get(i).getDetails());
         }
+        System.out.print("Select a student: ");
         int selectedIndex = scan.nextInt() - 1;
         scan.nextLine(); 
         return students.get(selectedIndex);
@@ -154,10 +154,10 @@ public class Main {
 
     // method to select a course from the list
     private static Course selectCourse(List<Course> courses, Scanner scan) {
-        System.out.print("Select a course: ");
         for (int i = 0; i < courses.size(); i++) {
             System.out.println((i + 1) + ". " + courses.get(i).getDetails());
         }
+        System.out.print("Select a course: ");
         int selectedIndex = scan.nextInt() - 1;
         scan.nextLine(); 
         return courses.get(selectedIndex);
