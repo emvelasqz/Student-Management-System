@@ -3,6 +3,11 @@ public class Schedule {
     private String time;
     private String block;
 
+    public Schedule(String day, String time) {
+        this.day = day;
+        this.time = time;
+    }
+
     public Schedule(String day, String time, String block) {
         this.day = day;
         this.time = time;

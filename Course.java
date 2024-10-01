@@ -8,7 +8,7 @@ public class Course {
     private List<Grade> grades;
 
     // constructor
-    public Course(String courseName, String courseCode) {
+    public Course(String courseName, String courseCode, Schedule schedule) {
         this.courseName = courseName;
         this.courseCode = courseCode;
         this.grades = new ArrayList<>();

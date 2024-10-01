@@ -16,17 +16,17 @@ public class RegularStudent extends Student {
     // a private method of predefined schedules for reg students
     private void assignPredefinedCourses() {
         if (block.equals("A")) {
-            enroll(new Course("Introduction to Web Programming", "2067", "Thursday", "8:30 AM"));
-            enroll(new Course("Introduction to Cyber Security", "2069", "Friday", "11:00 AM"));
+            enroll(new Course("Introduction to Web Programming", "2067", new Schedule("Thursday", "8:30 AM")));
+            enroll(new Course("Introduction to Cyber Security", "2069", new Schedule("Friday", "11:00 AM")));
         } else if (block.equals("B")) {
-            enroll(new Course("Data Structures & Algorithms", "2065", "Monday", "12:00 PM"));
-            enroll(new Course("Object-Oriented Programming", "2066", "Tuesday", "4:00 PM"));
+            enroll(new Course("Data Structures & Algorithms", "2065", new Schedule("Monday", "12:00 PM")));
+            enroll(new Course("Object-Oriented Programming", "2066", new Schedule("Tuesday", "4:00 PM")));
         } else if (block.equals("C")) {
-            enroll(new Course("Operating Systems Fundamentals", "2068", "Wednesday", "9:00 AM"));
-            enroll(new Course("Calculus", "2070", "Thursday", "11:00 AM"));
+            enroll(new Course("Operating Systems Fundamentals", "2068", new Schedule("Wednesday", "9:00 AM")));
+            enroll(new Course("Calculus", "2070", new Schedule("Thursday", "11:00 AM")));
         } else if (block.equals("D")) {
-            enroll(new Course("Physical Education 3", "9211", "Friday", "2:00 PM"));
-            enroll(new Course("Ethics", "2071", "Monday", "3:00 PM"));
+            enroll(new Course("Physical Education 3", "9211", new Schedule("Friday", "2:00 PM")));
+            enroll(new Course("Ethics", "2071", new Schedule("Monday", "3:00 PM")));
         }
     }
 
