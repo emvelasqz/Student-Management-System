@@ -10,7 +10,7 @@ public class Grade {
         this.gradeValue = gradeValue;
     }
 
-    // metthods (getter)
+    // methods (getter)
     public Course getCourse() {
         return course;
     }
@@ -18,7 +18,7 @@ public class Grade {
     public Student getStudent() {
         return student;
     }
-    
+
     public double getGradeValue() {
         return gradeValue;
     }
