@@ -8,7 +8,7 @@ public class Main {
         Student student = null;
         Course course = null;
 
-        while (true) { // execution of while loop
+        while (true) {
             System.out.println("================= Student Management System =================");
             System.out.println("Menu:");
             System.out.println("1. Create Student");
@@ -36,11 +36,11 @@ public class Main {
                     break;
                 case 3:
                     if (student instanceof RegularStudent) {
-                        if (student.getCourses().size() < 1) { // Regular students can enroll only in one block
+                        if (student.getCourses().size() < 2) { // Regular students can enroll only in their predefined courses
                             student.enroll(course);
                             System.out.println("Student enrolled in course: " + course.getDetails());
                         } else {
-                            System.out.println("Regular students can only enroll in one block.");
+                            System.out.println("Regular students can only enroll in their predefined courses.");
                         }
                     } else {
                         student.enroll(course);
@@ -53,23 +53,23 @@ public class Main {
                         course.assignGrade(student, grade);
                         System.out.println("Grade assigned successfully!");
                     } else {
-                        System.out.println("Please create both a student and a course first.");
+                        System.out.println("Please create a student and a course first.");
                     }
                     break;
                 case 5:
                     if (student != null && course != null) {
                         student.dropCourse(course);
-                        System.out.println("Dropped course: " + course.getDetails());
+                        System.out.println("Course dropped successfully!");
                     } else {
-                        System.out.println("Please create both a student and a course first.");
+                        System.out.println("Please create a student and a course first.");
                     }
                     break;
                 case 6:
                     if (student instanceof RegularStudent) {
                         ((RegularStudent) student).dropBlock();
-                        System.out.println("Dropped all courses in block for regular student.");
+                        System.out.println("All courses in block dropped successfully!");
                     } else {
-                        System.out.println("This option is only available for regular students.");
+                        System.out.println("Only regular students can drop all courses in their block.");
                     }
                     break;
                 case 7:
@@ -88,7 +88,7 @@ public class Main {
                     break;
                 case 9:
                     if (student != null) {
-                        System.out.println("Enter new type (Regular/Irregular):");
+                        System.out.print("Enter new type (Regular/Irregular): ");
                         String newType = scan.nextLine();
                         student.updateType(newType);
                         System.out.println("Student type updated to: " + newType);
@@ -97,12 +97,12 @@ public class Main {
                     }
                     break;
                 case 0:
+                    System.out.println("Exiting the system. Goodbye!");
                     inputter.close();
                     scan.close();
-                    System.out.println("Exiting...");
-                    return;
+                    return; // Exit the program
                 default:
-                    System.out.println("Invalid choice. Please try again.");
+                    System.out.println("Invalid choice! Please try again.");
             }
         }
     }
