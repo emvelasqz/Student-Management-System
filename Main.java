@@ -127,6 +127,7 @@ public class Main {
                         String newType = scan.nextLine();
                         selectedStudent.updateType(newType);
                         System.out.println("Student type updated to: " + newType);
+                        System.out.println("Updated Admission Fee: " + selectedStudent.getAdmissionFee());
                     }
                     break;
                 case 0:
