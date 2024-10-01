@@ -23,15 +23,21 @@ public class Inputter {
     }
 
     public Course createCourse() {
-        System.out.print("Enter Course Name: ");
+        System.out.println("Enter Course Name:");
         String courseName = scan.nextLine();
-        System.out.print("Enter Course Code: ");
+        System.out.println("Enter Course Code:");
         String courseCode = scan.nextLine();
-        System.out.print("Enter Day: ");
+        return new Course(courseName, courseCode);
+    }
+
+    public Schedule createSchedule() {
+        System.out.println("Enter Day:");
         String day = scan.nextLine();
-        System.out.print("Enter Time: ");
+        System.out.println("Enter Time:");
         String time = scan.nextLine();
-        return new Course(courseName, courseCode, day, time);
+        System.out.println("Enter Block:");
+        String block = scan.nextLine();
+        return new Schedule(day, time, block);
     }
 
     public double getGradeInput() {
