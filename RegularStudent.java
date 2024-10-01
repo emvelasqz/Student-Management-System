@@ -3,6 +3,7 @@ public class RegularStudent extends Student {
 
     public RegularStudent(String studentID, String name, String block) {
         super(studentID, name);
+        this.type = "Regular";
         this.block = block;
     }
 
