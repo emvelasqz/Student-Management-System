@@ -1,8 +1,9 @@
 import java.util.Scanner;
 
 public class Inputter {
-    public Scanner scan = new Scanner(System.in);
+    private Scanner scan = new Scanner(System.in);
 
+    // methods in main class
     public Student createStudent() {
         System.out.println("Enter Student ID: ");
         String studentID = scan.nextLine();
@@ -19,5 +20,26 @@ public class Inputter {
         } else {
             return new IrregularStudent(studentID, name);
         }
+    }
+
+    public Course createCourse() {
+        System.out.println("Enter Course Name: ");
+        String courseName = scan.nextLine();
+        System.out.println("Enter Course Code: ");
+        String courseCode = scan.nextLine();
+        System.out.println("Enter Day: ");
+        String day = scan.nextLine();
+        System.out.println("Enter Time: ");
+        String time = scan.nextLine();
+        return new Course(courseName, courseCode, day, time);
+    }
+
+    public double getGradeInput() {
+        System.out.println("Enter Grade (0-100): ");
+        return scan.nextDouble();
+    }
+
+    public void close() {
+        scan.close();
     }
 }
