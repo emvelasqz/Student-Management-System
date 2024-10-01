@@ -1,5 +1,5 @@
 public class Displayer {
-    // methods to display
+    // methods to display in the main class
     public void displayStudentDetails(Student student) {
         System.out.println(student.getDetails());
         System.out.println("Enrolled Courses:");
