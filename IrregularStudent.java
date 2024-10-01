@@ -3,12 +3,11 @@ class IrregularStudent extends Student {
 
     // constructor
     public IrregularStudent(String studentID, String name) {
-        super(studentID, name);
-        this.type = "Irregular";
+        super(studentID, name, "Irregular");
     }
 
     @Override // to override the fixed calculation
     public double calculateTotalFees() {
-        return 10000.0 + additionalAdmissionFee; // standard fee + additional fee
+        return getAdmissionFee() + additionalAdmissionFee; // standard fee + additional fee
     }
 }
