@@ -32,6 +32,10 @@ public abstract class Student {
         courses.remove(course);
     }
 
+    public void dropBlock() {
+        courses.clear();
+    }
+
     public List<Grade> getGrades() {
         List<Grade> grades = new ArrayList<>();
         for (Course course : courses) {
