@@ -8,7 +8,7 @@ public class Main {
         Displayer displayer = new Displayer();
         Scanner scan = new Scanner(System.in);
         List<Student> students = new ArrayList<>(); // list to manage multiple students
-        Course course = null;
+        List<Course> courses = new ArrayList<>(); // list to manage multiple courses
 
         while (true) {
             System.out.println("================= Student Management System =================");
@@ -25,55 +25,67 @@ public class Main {
             System.out.println("0. Exit");
             System.out.print("\nEnter your choice: ");
             int choice = scan.nextInt();
-            scan.nextLine(); // consume newline left-over
+            scan.nextLine();
 
             switch (choice) {
                 case 1:
                     Student student = inputter.createStudent();
+                    if (student instanceof RegularStudent) {
+                        List<Course> predefinedCourses = ((RegularStudent) student).getCourses();
+                        for (Course course : predefinedCourses) {
+                            if (!courses.contains(course)) {
+                                courses.add(course);
+                            }
+                        }
+                    }
                     students.add(student);
                     System.out.println("Student created successfully!");
                     break;
                 case 2:
-                    course = inputter.createCourse();
+                    Course course = inputter.createCourse();
+                    courses.add(course);
                     System.out.println("Course created successfully!");
                     break;
                 case 3:
                     if (students.isEmpty()) {
                         System.out.println("No students available. Please create a student first.");
-                    } else if (course == null) {
+                    } else if (courses.isEmpty()) {
                         System.out.println("Please create a course first.");
                     } else {
-                        Student selectedStudent = selectStudent(students, scan); // to select a student from the list
+                        Student selectedStudent = selectStudent(students, scan);
+                        Course selectedCourse = selectCourse(courses, scan);
+
                         if (selectedStudent instanceof RegularStudent) {
                             RegularStudent regularStudent = (RegularStudent) selectedStudent;
-                            if (regularStudent.getCourses().size() < 2) {
-                                regularStudent.enroll(course);
-                                System.out.println("Regular student enrolled in course: " + course.getDetails());
+                            if (regularStudent.getCourses().contains(selectedCourse)) {
+                                System.out.println("Regular student is already enrolled in this course.");
                             } else {
                                 System.out.println("Regular students cannot enroll in additional courses.");
                             }
                         } else {
-                            selectedStudent.enroll(course);
-                            System.out.println("Irregular student enrolled in course: " + course.getDetails());
+                            selectedStudent.enroll(selectedCourse);
+                            System.out.println("Irregular student enrolled in course: " + selectedCourse.getDetails());
                         }
                     }
                     break;
                 case 4:
-                    if (students.isEmpty() || course == null) {
+                    if (students.isEmpty() || courses.isEmpty()) {
                         System.out.println("Please create a student and a course first.");
                     } else {
                         Student selectedStudent = selectStudent(students, scan);
+                        Course selectedCourse = selectCourse(courses, scan);
                         double grade = inputter.getGradeInput();
-                        course.assignGrade(selectedStudent, grade);
+                        selectedCourse.assignGrade(selectedStudent, grade);
                         System.out.println("Grade assigned successfully!");
                     }
                     break;
                 case 5:
-                    if (students.isEmpty() || course == null) {
+                    if (students.isEmpty() || courses.isEmpty()) {
                         System.out.println("Please create a student and a course first.");
                     } else {
                         Student selectedStudent = selectStudent(students, scan);
-                        selectedStudent.dropCourse(course);
+                        Course selectedCourse = selectCourse(courses, scan);
+                        selectedStudent.dropCourse(selectedCourse);
                         System.out.println("Course dropped successfully!");
                     }
                     break;
@@ -99,8 +111,9 @@ public class Main {
                     }
                     break;
                 case 8:
-                    if (course != null) {
-                        displayer.displayCourseDetails(course);
+                    if (!courses.isEmpty()) {
+                        Course selectedCourse = selectCourse(courses, scan);
+                        displayer.displayCourseDetails(selectedCourse);
                     } else {
                         System.out.println("Please create a course first.");
                     }
@@ -129,12 +142,23 @@ public class Main {
 
     // method to select a student from the list
     private static Student selectStudent(List<Student> students, Scanner scan) {
-        System.out.println("Select a student:");
+        System.out.print("Select a student: ");
         for (int i = 0; i < students.size(); i++) {
             System.out.println((i + 1) + ". " + students.get(i).getDetails());
         }
         int selectedIndex = scan.nextInt() - 1;
-        scan.nextLine();
+        scan.nextLine(); 
         return students.get(selectedIndex);
+    }
+
+    // method to select a course from the list
+    private static Course selectCourse(List<Course> courses, Scanner scan) {
+        System.out.print("Select a course: ");
+        for (int i = 0; i < courses.size(); i++) {
+            System.out.println((i + 1) + ". " + courses.get(i).getDetails());
+        }
+        int selectedIndex = scan.nextInt() - 1;
+        scan.nextLine(); 
+        return courses.get(selectedIndex);
     }
 }
