@@ -24,41 +24,21 @@ public abstract class Student {
         courses.add(course);
     }
 
-    public void dropCourse(String courseCode) {
-        courses.removeIf(course -> course.getCourseCode().equals(courseCode));
+    public String getDetails() {
+        return "Name: " + name + "\nID: " + studentID + "\nType: " + type;
     }
 
-    // getters & setters
-
-    public String getStudentID() {
-        return studentID;
+    public void dropCourse(Course course) {
+        courses.remove(course);
     }
 
-    public String getName() {
-        return name;
-    }
-    
-    public String getType() {
-        return type;
-    }
-
-    public List<Course> getCourses() {
-        return courses;
+    public List<Grade> getGrades() {
+        List<Grade> grades = new ArrayList<>();
+        for (Course course : courses) {
+            grades.add(course.getGradeForStudent(this));
+        }
+        return grades;
     }
 
-    public void setStudentID(String studentID) {
-        this.studentID = studentID;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public void setType(String type) {
-        this.type = type;
-    }
-
-    public void setCourses(List<Course> courses) {
-        this.courses = courses;
-    }
+    public abstract double calculateTotalFees();
 }
