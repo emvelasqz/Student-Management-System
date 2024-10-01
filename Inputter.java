@@ -14,7 +14,7 @@ public class Inputter {
 
         // if-else condition to determine student type
         if (type.equalsIgnoreCase("Regular")) {
-            System.out.print("Enter Block (A to D):"); // to enroll in a block
+            System.out.print("Enter Block (A to D): "); // to enroll in a block
             String block = scan.nextLine();
             return new RegularStudent(studentID, name, block); // assign the student in the chosen block
         } else {
@@ -23,9 +23,9 @@ public class Inputter {
     }
 
     public Course createCourse() {
-        System.out.println("Enter Course Name:");
+        System.out.println("Enter Course Name: ");
         String courseName = scan.nextLine();
-        System.out.println("Enter Course Code:");
+        System.out.println("Enter Course Code: ");
         String courseCode = scan.nextLine();
         Course course = new Course(courseName, courseCode, createSchedule());
 
