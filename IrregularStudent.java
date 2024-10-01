@@ -1,0 +1,3 @@
+class IrregularStudent extends Student {
+    
+}
