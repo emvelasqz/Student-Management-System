@@ -5,16 +5,16 @@ public class Inputter {
 
     // methods in main class
     public Student createStudent() {
-        System.out.println("Enter Student ID: ");
+        System.out.print("Enter Student ID: ");
         String studentID = scan.nextLine();
-        System.out.println("Enter Student Name: ");
+        System.out.print("Enter Student Name: ");
         String name = scan.nextLine();
-        System.out.println("Enter Student Type (Regular/Irregular): ");
+        System.out.print("Enter Student Type (Regular/Irregular): ");
         String type = scan.nextLine();
 
         // if-else condition to determine student type
         if (type.equalsIgnoreCase("Regular")) {
-            System.out.println("Enter Block (A to D):"); // to enroll in a block
+            System.out.print("Enter Block (A to D):"); // to enroll in a block
             String block = scan.nextLine();
             return new RegularStudent(studentID, name, block); // assign the student in the chosen block
         } else {
@@ -23,19 +23,19 @@ public class Inputter {
     }
 
     public Course createCourse() {
-        System.out.println("Enter Course Name: ");
+        System.out.print("Enter Course Name: ");
         String courseName = scan.nextLine();
-        System.out.println("Enter Course Code: ");
+        System.out.print("Enter Course Code: ");
         String courseCode = scan.nextLine();
-        System.out.println("Enter Day: ");
+        System.out.print("Enter Day: ");
         String day = scan.nextLine();
-        System.out.println("Enter Time: ");
+        System.out.print("Enter Time: ");
         String time = scan.nextLine();
         return new Course(courseName, courseCode, day, time);
     }
 
     public double getGradeInput() {
-        System.out.println("Enter Grade (0-100): ");
+        System.out.print("Enter Grade (0-100): ");
         return scan.nextDouble();
     }
 
