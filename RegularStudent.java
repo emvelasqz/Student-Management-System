@@ -2,8 +2,7 @@ public class RegularStudent extends Student {
     private String block;
 
     public RegularStudent(String studentID, String name, String block) {
-        super(studentID, name);
-        this.type = "Regular";
+        super(studentID, name, "Regular");
         this.block = block;
         assignPredefinedCourses();
     }
@@ -65,6 +64,6 @@ public class RegularStudent extends Student {
 
     @Override
     public double calculateTotalFees() {
-        return 10000.0; // standard fee
+        return getAdmissionFee();
     }
 }
