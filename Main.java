@@ -7,8 +7,8 @@ public class Main {
         Inputter inputter = new Inputter();
         Displayer displayer = new Displayer();
         Scanner scan = new Scanner(System.in);
-        List<Student> students = new ArrayList<>(); // list to manage multiple students
-        List<Course> courses = new ArrayList<>(); // list to manage multiple courses
+        List<Student> students = new ArrayList<>();
+        List<Course> courses = new ArrayList<>();
 
         while (true) {
             System.out.println("================= Student Management System =================");
@@ -22,6 +22,8 @@ public class Main {
             System.out.println("7. View Student Details");
             System.out.println("8. View Course Details");
             System.out.println("9. Update Student Type");
+            System.out.println("10. Search Student by ID");
+            System.out.println("11. Filter Courses by Block");
             System.out.println("0. Exit");
             System.out.print("\nEnter your choice: ");
             int choice = scan.nextInt();
@@ -130,6 +132,28 @@ public class Main {
                         System.out.println("Updated Admission Fee: " + selectedStudent.getAdmissionFee());
                     }
                     break;
+                case 10:
+                    System.out.print("Enter student ID to search: ");
+                    String studentID = scan.nextLine();
+                    Student foundStudent = searchByID(students, studentID);
+                    if (foundStudent != null) {
+                        displayer.displayStudentDetails(foundStudent);
+                    } else {
+                        System.out.println("Student not found.");
+                    }
+                    break;
+                case 11:
+                    System.out.print("Enter block to filter courses: ");
+                    String block = scan.nextLine();
+                    List<Course> filteredCourses = filterByBlock(courses, block);
+                    if (!filteredCourses.isEmpty()) {
+                        for (Course filteredCourse : filteredCourses) {
+                            displayer.displayCourseDetails(filteredCourse);
+                        }
+                    } else {
+                        System.out.println("No courses found for block " + block);
+                    }
+                    break;
                 case 0:
                     System.out.println("Exiting the system. Goodbye!");
                     inputter.close();
@@ -141,25 +165,47 @@ public class Main {
         }
     }
 
-    // method to select a student from the list
+    private static Student searchByID(List<Student> students, String studentID) {
+        for (Student student : students) {
+            if (student.studentID.equals(studentID)) {
+                return student;
+            }
+        }
+        return null;
+    }
+
+    private static List<Course> filterByBlock(List<Course> courses, String block) {
+        List<Course> filteredCourses = new ArrayList<>();
+        for (Course course : courses) {
+            for (Schedule schedule : course.schedules) {
+                if (schedule.getBlock().equalsIgnoreCase(block)) {
+                    filteredCourses.add(course);
+                    break;
+                }
+            }
+        }
+        return filteredCourses;
+    }
+
+    // existing method to select a student from the list
     private static Student selectStudent(List<Student> students, Scanner scan) {
         for (int i = 0; i < students.size(); i++) {
             System.out.println((i + 1) + ". " + students.get(i).getDetails());
         }
         System.out.print("Select a student: ");
         int selectedIndex = scan.nextInt() - 1;
-        scan.nextLine(); 
+        scan.nextLine();
         return students.get(selectedIndex);
     }
 
-    // method to select a course from the list
+    // existing method to select a course from the list
     private static Course selectCourse(List<Course> courses, Scanner scan) {
         for (int i = 0; i < courses.size(); i++) {
             System.out.println((i + 1) + ". " + courses.get(i).getDetails());
         }
         System.out.print("Select a course: ");
         int selectedIndex = scan.nextInt() - 1;
-        scan.nextLine(); 
+        scan.nextLine();
         return courses.get(selectedIndex);
     }
 }
