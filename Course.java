@@ -2,10 +2,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Course {
-    private String courseName;
-    private String courseCode;
-    private List<Schedule> schedules;
-    private List<Grade> grades;
+    protected String courseName;
+    protected String courseCode;
+    protected List<Schedule> schedules;
+    protected List<Grade> grades;
 
     // constructor
     public Course(String courseName, String courseCode, Schedule schedule) {
