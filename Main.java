@@ -70,15 +70,25 @@ public class Main {
                         }
                     }
                     break;
-                case 4:
+                    case 4:
                     if (students.isEmpty() || courses.isEmpty()) {
                         System.out.println("Please create a student and a course first.");
                     } else {
-                        Student selectedStudent = selectStudent(students, scan);
-                        Course selectedCourse = selectCourse(courses, scan);
-                        double grade = inputter.getGradeInput();
-                        selectedCourse.assignGrade(selectedStudent, grade);
-                        System.out.println("Grade assigned successfully!");
+                        try {
+                            Student selectedStudent = selectStudent(students, scan);
+                            Course selectedCourse = selectCourse(courses, scan);
+                            double grade = inputter.getGradeInput();
+                            if (grade < 0 || grade > 100) {
+                                System.out.println("Invalid grade. Please enter a value between 0 and 100.");
+                            } else {
+                                selectedCourse.assignGrade(selectedStudent, grade);
+                                System.out.println("Grade assigned successfully!");
+                            }
+                        } catch (IndexOutOfBoundsException e) {
+                            System.out.println("Invalid selection. Please try again.");
+                        } catch (IllegalArgumentException e) {
+                            System.out.println("Error: " + e.getMessage());
+                        }
                     }
                     break;
                 case 5:
