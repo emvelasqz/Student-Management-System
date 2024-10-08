@@ -46,6 +46,8 @@ public class RegularStudent extends Student {
             Course course2 = new Course("Ethics", "2071", null);
             course2.addSchedule(new Schedule("Monday", "3:00 PM", "D"));
             enroll(course2);
+        } else {
+            System.out.println("Invalid block. Select only from Block A to D.");
         }
     }    
 
