@@ -83,16 +83,8 @@ public class Inputter {
         }
 
         String block = "";
-        while (true) {
-            System.out.println("Enter Block: ");
-            block = scan.nextLine();
-            if (block.matches("[A-D]")) {
-                break;
-            } else {
-                System.out.println("Invalid input. Please enter a block (A, B, C, or D).");
-            }
-        }
-
+        System.out.println("Enter Block: ");
+        block = scan.nextLine();
         return new Schedule(day, time, block);
     }
 

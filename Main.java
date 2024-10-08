@@ -197,7 +197,6 @@ public class Main {
         return filteredCourses;
     }
 
-    // existing method to select a student from the list
     private static Student selectStudent(List<Student> students, Scanner scan) {
         for (int i = 0; i < students.size(); i++) {
             System.out.println((i + 1) + ". " + students.get(i).getDetails());
@@ -205,10 +204,15 @@ public class Main {
         System.out.print("Select a student: ");
         int selectedIndex = scan.nextInt() - 1;
         scan.nextLine();
+        
+        if (selectedIndex < 0 || selectedIndex >= students.size()) {
+            System.out.println("Invalid selection. Please try again.");
+            return selectStudent(students, scan); // Recursive call to try again
+        }
+
         return students.get(selectedIndex);
     }
 
-    // existing method to select a course from the list
     private static Course selectCourse(List<Course> courses, Scanner scan) {
         for (int i = 0; i < courses.size(); i++) {
             System.out.println((i + 1) + ". " + courses.get(i).getDetails());
@@ -216,6 +220,12 @@ public class Main {
         System.out.print("Select a course: ");
         int selectedIndex = scan.nextInt() - 1;
         scan.nextLine();
+        
+        if (selectedIndex < 0 || selectedIndex >= courses.size()) {
+            System.out.println("Invalid selection. Please try again.");
+            return selectCourse(courses, scan);
+        }
+
         return courses.get(selectedIndex);
     }
 }
