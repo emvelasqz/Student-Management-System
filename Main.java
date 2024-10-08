@@ -70,7 +70,7 @@ public class Main {
                         }
                     }
                     break;
-                    case 4:
+                case 4:
                     if (students.isEmpty() || courses.isEmpty()) {
                         System.out.println("Please create a student and a course first.");
                     } else {

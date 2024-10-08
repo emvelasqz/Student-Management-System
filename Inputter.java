@@ -2,21 +2,36 @@ import java.util.Scanner;
 
 public class Inputter {
     private Scanner scan = new Scanner(System.in);
-
-    // methods in main class
     public Student createStudent() {
         System.out.print("Enter Student ID: ");
         String studentID = scan.nextLine();
+
         System.out.print("Enter Student Name: ");
         String name = scan.nextLine();
-        System.out.print("Enter Student Type (Regular/Irregular): ");
-        String type = scan.nextLine();
 
-        // if-else condition to determine student type
+        String type = "";
+        while (true) {
+            System.out.print("Enter Student Type (Regular/Irregular): ");
+            type = scan.nextLine();
+            if (type.equalsIgnoreCase("Regular") || type.equalsIgnoreCase("Irregular")) {
+                break;
+            } else {
+                System.out.println("Invalid input. Please enter 'Regular' or 'Irregular'.");
+            }
+        }
+
+        String block = "";
         if (type.equalsIgnoreCase("Regular")) {
-            System.out.print("Enter Block (A to D): "); // to enroll in a block
-            String block = scan.nextLine();
-            return new RegularStudent(studentID, name, block); // assign the student in the chosen block
+            while (true) {
+                System.out.print("Enter Block (A to D): ");
+                block = scan.nextLine().toUpperCase();
+                if (block.matches("[A-D]")) {
+                    break;
+                } else {
+                    System.out.println("Invalid input. Please enter a block (A, B, C, or D).");
+                }
+            }
+            return new RegularStudent(studentID, name, block);
         } else {
             return new IrregularStudent(studentID, name);
         }
@@ -25,8 +40,10 @@ public class Inputter {
     public Course createCourse() {
         System.out.println("Enter Course Name: ");
         String courseName = scan.nextLine();
+
         System.out.println("Enter Course Code: ");
         String courseCode = scan.nextLine();
+
         Course course = new Course(courseName, courseCode, createSchedule());
 
         System.out.print("Do you want to add a schedule to this course? (y/n): ");
@@ -43,18 +60,59 @@ public class Inputter {
     }
 
     public Schedule createSchedule() {
-        System.out.println("Enter Day: ");
-        String day = scan.nextLine();
-        System.out.println("Enter Time: ");
-        String time = scan.nextLine();
-        System.out.println("Enter Block: ");
-        String block = scan.nextLine();
+        String day = "";
+        while (true) {
+            System.out.println("Enter Day (e.g., Monday, Tuesday): ");
+            day = scan.nextLine();
+            if (!day.trim().isEmpty()) {
+                break;
+            } else {
+                System.out.println("Invalid input. Please enter a valid day.");
+            }
+        }
+
+        String time = "";
+        while (true) {
+            System.out.println("Enter Time (e.g., 10:00 AM): ");
+            time = scan.nextLine();
+            if (!time.trim().isEmpty()) {
+                break;
+            } else {
+                System.out.println("Invalid input. Please enter a valid time.");
+            }
+        }
+
+        String block = "";
+        while (true) {
+            System.out.println("Enter Block: ");
+            block = scan.nextLine();
+            if (block.matches("[A-D]")) {
+                break;
+            } else {
+                System.out.println("Invalid input. Please enter a block (A, B, C, or D).");
+            }
+        }
+
         return new Schedule(day, time, block);
     }
 
     public double getGradeInput() {
-        System.out.print("Enter Grade (0-100): ");
-        return scan.nextDouble();
+        double grade = -1;
+        while (true) {
+            System.out.print("Enter Grade (0-100): ");
+            if (scan.hasNextDouble()) {
+                grade = scan.nextDouble();
+                if (grade >= 0 && grade <= 100) {
+                    break;
+                } else {
+                    System.out.println("Invalid input. Please enter a grade between 0 and 100.");
+                }
+            } else {
+                System.out.println("Invalid input. Please enter a valid number.");
+                scan.next();
+            }
+        }
+        return grade;
     }
 
     public void close() {
