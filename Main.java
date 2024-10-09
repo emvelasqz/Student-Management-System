@@ -76,7 +76,20 @@ public class Main {
                     } else {
                         try {
                             Student selectedStudent = selectStudent(students, scan);
-                            Course selectedCourse = selectCourse(courses, scan);
+                            
+                            List<Course> selectableCourses;
+                            if (selectedStudent instanceof RegularStudent) {
+                                selectableCourses = ((RegularStudent) selectedStudent).getCourses();
+                            } else {
+                                selectableCourses = new ArrayList<>(courses); 
+                            }
+                            
+                            if (selectableCourses.isEmpty()) {
+                                System.out.println("No courses available for this student.");
+                                break;
+                            }
+                            
+                            Course selectedCourse = selectCourse(selectableCourses, scan);
                             double grade = inputter.getGradeInput();
                             if (grade < 0 || grade > 100) {
                                 System.out.println("Invalid grade. Please enter a value between 0 and 100.");
@@ -90,7 +103,7 @@ public class Main {
                             System.out.println("Error: " + e.getMessage());
                         }
                     }
-                    break;
+                    break;                
                 case 5:
                     if (students.isEmpty() || courses.isEmpty()) {
                         System.out.println("Please create a student and a course first.");
