@@ -2,9 +2,25 @@ import java.util.Scanner;
 
 public class Inputter {
     private Scanner scan = new Scanner(System.in);
+
+    // method to validate the student ID (numbers only)
+    private String getValidStudentID() {
+        String studentID;
+        while (true) {
+            System.out.print("Enter Student ID (numbers only): ");
+            studentID = scan.nextLine();
+            if (studentID.matches("\\d+")) { // a condition to make sure that the user only inputs digits 0-9 in the studentID
+                break;
+            } else {
+                System.out.println("Invalid input! Please enter numeric characters only.");
+            }
+        }
+        return studentID;
+    }
+
     public Student createStudent() {
-        System.out.print("Enter Student ID: ");
-        String studentID = scan.nextLine();
+        // call the method to get the Student ID
+        String studentID = getValidStudentID();
 
         System.out.print("Enter Student Name: ");
         String name = scan.nextLine();
