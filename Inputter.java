@@ -22,8 +22,17 @@ public class Inputter {
         // call the method to get the Student ID
         String studentID = getValidStudentID();
 
-        System.out.print("Enter Student Name: ");
-        String name = scan.nextLine();
+        String name = "";
+        while (true) {
+            System.out.print("Enter Student Name: ");
+            name = scan.nextLine();
+            // Validate if the name contains only letters and spaces
+            if (name.matches("[a-zA-Z\\s]+")) {
+                break;
+            } else {
+                System.out.println("Invalid input! Please enter alphabetic characters only.");
+            }
+        }
 
         String type = "";
         while (true) {
