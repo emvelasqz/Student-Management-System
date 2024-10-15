@@ -220,7 +220,7 @@ public class Main {
         
         if (selectedIndex < 0 || selectedIndex >= students.size()) {
             System.out.println("Invalid selection. Please try again.");
-            return selectStudent(students, scan); // Recursive call to try again
+            return selectStudent(students, scan);
         }
 
         return students.get(selectedIndex);
