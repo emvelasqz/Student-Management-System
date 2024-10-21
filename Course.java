@@ -2,6 +2,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Course {
+    protected List<Course> courses;
     protected String courseName;
     protected String courseCode;
     protected List<Schedule> schedules;
@@ -9,6 +10,7 @@ public class Course {
 
     // constructor
     public Course(String courseName, String courseCode, Schedule schedule) {
+        this.courses = new ArrayList<>();
         this.courseName = courseName;
         this.courseCode = courseCode;
         this.grades = new ArrayList<>();
@@ -16,6 +18,20 @@ public class Course {
     }
 
     // methods
+    public List<Course> getCourses() {
+        return courses;
+    }
+
+    public void enroll(Course course) {
+        courses.add(course);
+    }
+
+    public void dropCourse(Course course) {
+        courses.remove(course);
+    }
+
+
+
     public void addSchedule(Schedule schedule) {
         schedules.add(schedule);
     }
