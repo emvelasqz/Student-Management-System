@@ -24,9 +24,6 @@ public abstract class Student {
         return "Name: " + name + ", ID: " + studentID + ", Type: " + type + ", Admission Fee: " + admissionFee;
     }
 
-    public void dropCourse(Course course) {
-        courses.remove(course);
-    }
 
     public void dropBlock() {
         courses.clear();
