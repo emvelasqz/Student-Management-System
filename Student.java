@@ -18,13 +18,7 @@ public abstract class Student {
     }
 
     // methods
-    public List<Course> getCourses() {
-        return courses;
-    }
 
-    public void enroll(Course course) {
-        courses.add(course);
-    }
 
     public String getDetails() {
         return "Name: " + name + ", ID: " + studentID + ", Type: " + type + ", Admission Fee: " + admissionFee;
