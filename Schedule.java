@@ -1,7 +1,10 @@
+import java.util.List;
+
 public class Schedule {
     private String day;
     private String time;
     private String block;
+    protected List<Schedule> schedules;
 
     public Schedule(String day, String time) {
         this.day = day;
@@ -16,6 +19,22 @@ public class Schedule {
 
     public String getScheduleDetails() {
         return "Day: " + day + "\nTime: " + time + "\nBlock: " + block;
+    }
+
+    
+    public void addSchedule(Schedule schedule) {
+        schedules.add(schedule);
+    }
+    
+    public void viewSchedules() {
+        if (schedules.isEmpty()) {
+            System.out.println("No schedules available for this course.");
+            return;
+        }
+        
+        for (Schedule schedule : schedules) {
+            System.out.println(schedule.getScheduleDetails());
+        }
     }
 
     public void updateTime(String newTime) {
