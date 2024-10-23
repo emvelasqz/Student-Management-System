@@ -18,10 +18,14 @@ public class Course {
     }
 
     // methods
+    public Course getCourse() {
+        return course;
+    }
+
     public List<Course> getCourses() {
         return courses;
     }
-
+    
     public void enroll(Course course) {
         courses.add(course);
     }
@@ -29,7 +33,6 @@ public class Course {
     public void dropCourse(Course course) {
         courses.remove(course);
     }
-
 
 
     public void addSchedule(Schedule schedule) {
