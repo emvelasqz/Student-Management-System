@@ -35,20 +35,6 @@ public class Course {
     }
 
 
-    public void addSchedule(Schedule schedule) {
-        schedules.add(schedule);
-    }
-    
-    public void viewSchedules() {
-        if (schedules.isEmpty()) {
-            System.out.println("No schedules available for this course.");
-            return;
-        }
-        
-        for (Schedule schedule : schedules) {
-            System.out.println(schedule.getScheduleDetails());
-        }
-    }
 
     public void assignGrade(Student student, double gradeValue) {
         Grade grade = new Grade(this, student, gradeValue);
