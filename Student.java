@@ -1,6 +1,3 @@
-import java.util.ArrayList;
-import java.util.List;
-
 public abstract class Student {
     // attributes
     protected String studentID;
@@ -16,12 +13,6 @@ public abstract class Student {
     }
 
     // methods
-
-
-    public String getDetails() {
-        return "Name: " + name + ", ID: " + studentID + ", Type: " + type + ", Admission Fee: " + admissionFee;
-    }
-
     private double setAdmissionFee(String type) {
         if (type.equalsIgnoreCase("Regular")) {
             return 10000.0;
