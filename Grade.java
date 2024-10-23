@@ -1,3 +1,6 @@
+import java.util.ArrayList;
+import java.util.List;
+
 public class Grade {
     private Course course;
     private double gradeValue;
@@ -11,9 +14,6 @@ public class Grade {
     }
 
     // methods (getter)
-    public Course getCourse() {
-        return course;
-    }
 
     public Student getStudent() {
         return student;
@@ -21,6 +21,14 @@ public class Grade {
 
     public double getGradeValue() {
         return gradeValue;
+    }
+
+    public List<Grade> getGrades() {
+        List<Grade> grades = new ArrayList<>();
+        for (Course course : courses) {
+            grades.add(course.getGradeForStudent(this));
+        }
+        return grades;
     }
 
     public void setGradeValue(double gradeValue) {
