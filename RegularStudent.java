@@ -1,71 +1,47 @@
-public class RegularStudent extends Student {
-    private String block;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
+public class RegularStudent extends Student {
+    private static final double FEE = 10000.0;
+    private String block;
+    private static final Map<String, List<Schedule>> BLOCK_SCHEDULES = new HashMap<>();
+    
+    static {
+        List<Schedule> blockASchedules = new ArrayList<>();
+        blockASchedules.add(new Schedule("Monday", "8:00-9:30", "A"));
+        blockASchedules.add(new Schedule("Wednesday", "8:00-9:30", "A"));
+        blockASchedules.add(new Schedule("Friday", "8:00-9:30", "A"));
+        
+        List<Schedule> blockBSchedules = new ArrayList<>();
+        blockBSchedules.add(new Schedule("Tuesday", "13:00-14:30", "B"));
+        blockBSchedules.add(new Schedule("Thursday", "13:00-14:30", "B"));
+        blockBSchedules.add(new Schedule("Saturday", "10:00-11:30", "B"));
+        
+        BLOCK_SCHEDULES.put("A", blockASchedules);
+        BLOCK_SCHEDULES.put("B", blockBSchedules);
+    }
+    
     public RegularStudent(String studentID, String name, String block) {
         super(studentID, name, "Regular");
         this.block = block;
-        assignPredefinedCourses();
     }
-
-    // method to retrieve block
+    
     public String getBlock() {
         return block;
     }
-
-    // a private method of predefined schedules for reg students
-    private void assignPredefinedCourses() {
-        if (block.equalsIgnoreCase("A")) {
-            Course course1 = new Course("Introduction to Web Programming", "2067", null);
-            course1.addSchedule(new Schedule("Thursday", "8:30 AM", "A"));
-            enroll(course1);
     
-            Course course2 = new Course("Introduction to Cyber Security", "2069", null);
-            course2.addSchedule(new Schedule("Friday", "11:00 AM", "A"));
-            enroll(course2);
-        } else if (block.equalsIgnoreCase("B")) {
-            Course course1 = new Course("Data Structures & Algorithms", "2065", null);
-            course1.addSchedule(new Schedule("Monday", "12:00 PM", "B"));
-            enroll(course1);
-    
-            Course course2 = new Course("Object-Oriented Programming", "2066", null);
-            course2.addSchedule(new Schedule("Tuesday", "4:00 PM", "B"));
-            enroll(course2);
-        } else if (block.equalsIgnoreCase("C")) {
-            Course course1 = new Course("Operating Systems Fundamentals", "2068", null);
-            course1.addSchedule(new Schedule("Wednesday", "9:00 AM", "C"));
-            enroll(course1);
-    
-            Course course2 = new Course("Calculus", "2070", null);
-            course2.addSchedule(new Schedule("Thursday", "11:00 AM", "C"));
-            enroll(course2);
-        } else if (block.equalsIgnoreCase("D")) {
-            Course course1 = new Course("Physical Education 3", "9211", null);
-            course1.addSchedule(new Schedule("Friday", "2:00 PM", "D"));
-            enroll(course1);
-    
-            Course course2 = new Course("Ethics", "2071", null);
-            course2.addSchedule(new Schedule("Monday", "3:00 PM", "D"));
-            enroll(course2);
-        } else {
-            System.out.println("Invalid block. Select only from Block A to D.");
-        }
-    }    
-
-    public void dropBlock() {
-        this.courses.clear(); // drop all courses
+    public void setBlock(String block) {
+        this.block = block;
     }
-
-    @Override
-    public void enroll(Course course) {
-        if (courses.size() >= 2) {
-            System.out.println("Regular students are already enrolled in predefined courses for their block and cannot enroll in additional courses."); // message will print out - regular students have predefined schedule
-        } else {
-            super.enroll(course);
-        }
+    
+    public static List<Schedule> getBlockSchedules(String block) {
+        return BLOCK_SCHEDULES.getOrDefault(block, new ArrayList<>());
     }
-
+    
     @Override
     public double calculateTotalFees() {
-        return getAdmissionFee();
+        return FEE;
     }
 }
