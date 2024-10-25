@@ -233,7 +233,6 @@ public class Controller {
         displayer.displayCourseDetails(course);
         System.out.print("Confirm deletion (y/n): ");
         if (scan.nextLine().trim().equalsIgnoreCase("y")) {
-            // Remove course from all students
             for (Student student : students) {
                 student.getCourses().remove(course);
             }
