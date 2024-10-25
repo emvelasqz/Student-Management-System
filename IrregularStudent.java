@@ -1,13 +1,12 @@
-class IrregularStudent extends Student {
-    private static final double additionalAdmissionFee = 2000.0; // a constant value for the additional fee
+public class IrregularStudent extends Student {
+    private static final double FEE = 12000.0;
 
-    // constructor
     public IrregularStudent(String studentID, String name) {
         super(studentID, name, "Irregular");
     }
 
-    @Override // to override the fixed calculation
+    @Override
     public double calculateTotalFees() {
-        return getAdmissionFee() + additionalAdmissionFee; // standard fee + additional fee
+        return FEE;
     }
 }
