@@ -17,6 +17,24 @@ public class Controller {
         this.courses = new ArrayList<>();
     }
 
+    private boolean checkCoursesExist() {
+        if (courses.isEmpty()) {
+            System.out.println("\nThere are no courses added yet.");
+            System.out.println("Please create a course first using option 6 from the main menu.");
+            System.out.println("Returning to main menu...\n");
+            return false;
+        }
+        return true;
+    }
+
+    private boolean checkStudentsExist() {
+        if (students.isEmpty()) {
+            System.out.println("There are no students added yet. Please add students first.");
+            return false;
+        }
+        return true;
+    }
+
     public void createStudent() {
         Student student = inputter.createStudent();
         students.add(student);
@@ -31,21 +49,53 @@ public class Controller {
     }
 
     public void enrollStudentInCourse() {
+        if (!checkStudentsExist()) return;
+        
+        // Modified this part to provide clearer guidance
+        if (courses.isEmpty()) {
+            System.out.println("\nNo courses available for enrollment yet!");
+            System.out.println("You need to create courses first before enrolling students.");
+            System.out.println("Please follow these steps:");
+            System.out.println("1. Select option 6 from the main menu");
+            System.out.println("2. Create the desired course");
+            System.out.println("3. Return to option 11 to complete the enrollment");
+            System.out.println("\nReturning to main menu...\n");
+            return;
+        }
+        
         Student student = selectStudent();
+        if (student == null) return;
+        
         Course course = selectCourse();
+        if (course == null) return;
+        
         student.enroll(course);
         System.out.println("Student enrolled successfully!");
     }
 
     public void assignGrade() {
+        if (!checkStudentsExist()) return;
+        if (!checkCoursesExist()) return;
+        
         Student student = selectStudent();
+        if (student == null) return;
+        
+        if (student.getCourses().isEmpty()) {
+            System.out.println("This student is not enrolled in any courses yet.");
+            return;
+        }
+        
         Course course = selectCourse();
+        if (course == null) return;
+        
         double grade = inputter.getGradeInput();
         course.assignGrade(student, grade);
         System.out.println("Grade assigned successfully!");
     }
 
     public void searchStudentByID() {
+        if (!checkStudentsExist()) return;
+        
         System.out.print("Enter Student ID: ");
         String studentID = scan.nextLine().trim();
         boolean found = false;
@@ -65,6 +115,8 @@ public class Controller {
     }
     
     public void filterCourseDetails() {
+        if (!checkCoursesExist()) return;
+        
         System.out.print("Enter keyword to filter courses: ");
         String keyword = scan.nextLine().trim();
         boolean found = false;
@@ -81,12 +133,10 @@ public class Controller {
             System.out.println("No courses found matching the keyword: " + keyword);
         }
     }
-
+    
     public void viewAllStudents() {
-        if (students.isEmpty()) {
-            System.out.println("No students found in the system.");
-            return;
-        }
+        if (!checkStudentsExist()) return;
+        
         System.out.println("\n=== All Students ===");
         for (Student student : students) {
             displayer.displayStudentDetails(student);
@@ -95,10 +145,8 @@ public class Controller {
     }
 
     public void viewAllCourses() {
-        if (courses.isEmpty()) {
-            System.out.println("No courses found in the system.");
-            return;
-        }
+        if (!checkCoursesExist()) return;
+        
         System.out.println("\n=== All Courses ===");
         for (Course course : courses) {
             displayer.displayCourseDetails(course);
@@ -107,6 +155,8 @@ public class Controller {
     }
 
     public void updateStudent() {
+        if (!checkStudentsExist()) return;
+        
         Student student = selectStudent();
         if (student == null) return;
 
@@ -131,6 +181,8 @@ public class Controller {
     }
 
     public void updateCourse() {
+        if (!checkCoursesExist()) return;
+        
         Course course = selectCourse();
         if (course == null) return;
 
@@ -158,6 +210,8 @@ public class Controller {
     }
 
     public void deleteStudent() {
+        if (!checkStudentsExist()) return;
+        
         Student student = selectStudent();
         if (student == null) return;
 
@@ -171,6 +225,8 @@ public class Controller {
     }
 
     public void deleteCourse() {
+        if (!checkCoursesExist()) return;
+        
         Course course = selectCourse();
         if (course == null) return;
 
@@ -178,6 +234,7 @@ public class Controller {
         displayer.displayCourseDetails(course);
         System.out.print("Confirm deletion (y/n): ");
         if (scan.nextLine().trim().equalsIgnoreCase("y")) {
+            // Remove course from all students
             for (Student student : students) {
                 student.getCourses().remove(course);
             }
@@ -187,27 +244,51 @@ public class Controller {
     }
 
     private Student selectStudent() {
+        if (students.isEmpty()) {
+            System.out.println("No students available to select.");
+            return null;
+        }
+        
         while (true) {
             try {
                 displayStudents();
-                System.out.print("Select a student: ");
-                int index = Integer.parseInt(scan.nextLine().trim()) - 1;
-                return students.get(index);
-            } catch (IndexOutOfBoundsException | NumberFormatException e) {
+                System.out.print("Select a student (or 0 to cancel): ");
+                int index = Integer.parseInt(scan.nextLine().trim());
+                if (index == 0) {
+                    return null;
+                }
+                index--;
+                if (index >= 0 && index < students.size()) {
+                    return students.get(index);
+                }
                 System.out.println("Invalid selection! Please try again.");
+            } catch (NumberFormatException e) {
+                System.out.println("Invalid input! Please enter a number.");
             }
         }
     }
 
     private Course selectCourse() {
+        if (courses.isEmpty()) {
+            System.out.println("No courses available to select.");
+            return null;
+        }
+        
         while (true) {
             try {
                 displayCourses();
-                System.out.print("Select a course: ");
-                int index = Integer.parseInt(scan.nextLine().trim()) - 1;
-                return courses.get(index);
-            } catch (IndexOutOfBoundsException | NumberFormatException e) {
+                System.out.print("Select a course (or 0 to cancel): ");
+                int index = Integer.parseInt(scan.nextLine().trim());
+                if (index == 0) {
+                    return null;
+                }
+                index--;
+                if (index >= 0 && index < courses.size()) {
+                    return courses.get(index);
+                }
                 System.out.println("Invalid selection! Please try again.");
+            } catch (NumberFormatException e) {
+                System.out.println("Invalid input! Please enter a number.");
             }
         }
     }
