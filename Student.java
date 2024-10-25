@@ -1,34 +1,46 @@
+import java.util.ArrayList;
+import java.util.List;
+
 public abstract class Student {
-    // attributes
     protected String studentID;
     protected String name;
     protected String type; // regular or irregular
-    protected double admissionFee;
-
+    protected List<Course> courses;
+    
     public Student(String studentID, String name, String type) {
         this.studentID = studentID;
         this.name = name;
-        this.type = type;
-        this.admissionFee = setAdmissionFee(type);
+        this.type = type; 
+        this.courses = new ArrayList<>();
     }
-
-    // methods
-    private double setAdmissionFee(String type) {
-        if (type.equalsIgnoreCase("Regular")) {
-            return 10000.0;
-        } else {
-            return 10000.0 + 2000.0; 
-        }
-    }
-
-    public void updateType(String newType) {
-        this.type = newType;
-        this.admissionFee = setAdmissionFee(newType); // update the fee based on new type
-    }
-
-    public double getAdmissionFee() {
-        return admissionFee;
-    }
-
+    
     public abstract double calculateTotalFees();
+    
+    public void enroll(Course course) {
+        courses.add(course);
+    }
+    
+    public List<Course> getCourses() {
+        return new ArrayList<>(courses);
+    }
+    
+    public String getDetails() {
+        return "ID: " + studentID + ", Name: " + name + ", Type: " + type;
+    }
+    
+    public String getStudentID() {
+        return studentID;
+    }
+    
+    public void setName(String name) {
+        this.name = name;
+    }
+    
+    public String getName() {
+        return name;
+    }
+    
+    public String getType() {
+        return type;
+    }
 }
