@@ -51,7 +51,6 @@ public class Controller {
     public void enrollStudentInCourse() {
         if (!checkStudentsExist()) return;
         
-        // Modified this part to provide clearer guidance
         if (courses.isEmpty()) {
             System.out.println("\nNo courses available for enrollment yet!");
             System.out.println("You need to create courses first before enrolling students.");
