@@ -1,60 +1,59 @@
 import java.util.Scanner;
 
 public class Inputter {
-    private Scanner scan = new Scanner(System.in);
-
-    // method to validate the student ID (numbers only)
-    private String getValidStudentID() {
-        String studentID;
-        while (true) {
-            System.out.print("Enter Student ID (numbers only): ");
-            studentID = scan.nextLine();
-            if (studentID.matches("\\d+")) { // a condition to make sure that the user only inputs digits 0-9 in the studentID
-                break;
-            } else {
-                System.out.println("Invalid input! Please enter numeric characters only.");
-            }
-        }
-        return studentID;
-    }
+    private final Scanner scan = new Scanner(System.in);
 
     public Student createStudent() {
-        // call the method to get the Student ID
-        String studentID = getValidStudentID();
-
-        String name = "";
+        String studentID;
         while (true) {
-            System.out.print("Enter Student Name: ");
-            name = scan.nextLine();
-            // validate if the name contains only letters and spaces
-            if (name.matches("[a-zA-Z\\s]+")) {
+            System.out.print("Enter Student ID (numeric only): ");
+            studentID = scan.nextLine().trim();
+            if (isNumeric(studentID)) {
                 break;
-            } else {
-                System.out.println("Invalid input! Please enter alphabetic characters only.");
             }
+            System.out.println("Invalid ID! Please enter a numeric Student ID.");
         }
 
-        String type = "";
+        String name;
+        while (true) {
+            System.out.print("Enter Student Name (letters and spaces only): ");
+            name = scan.nextLine().trim();
+            if (isValidName(name)) {
+                break;
+            }
+            System.out.println("Invalid name! Please enter a valid name without numbers.");
+        }
+
+        String type;
         while (true) {
             System.out.print("Enter Student Type (Regular/Irregular): ");
-            type = scan.nextLine();
+            type = scan.nextLine().trim();
             if (type.equalsIgnoreCase("Regular") || type.equalsIgnoreCase("Irregular")) {
                 break;
-            } else {
-                System.out.println("Invalid input. Please enter 'Regular' or 'Irregular'.");
             }
+            System.out.println("Invalid type! Please enter 'Regular' or 'Irregular'.");
         }
 
-        String block = "";
         if (type.equalsIgnoreCase("Regular")) {
+            String block;
             while (true) {
-                System.out.print("Enter Block (A to D): ");
-                block = scan.nextLine().toUpperCase();
-                if (block.matches("[A-D]")) {
-                    break;
-                } else {
-                    System.out.println("Invalid input. Please enter a block (A, B, C, or D).");
+                System.out.println("\nAvailable Blocks:");
+                System.out.println("Block A Schedule:");
+                System.out.println("- Monday    8:00-9:30");
+                System.out.println("- Wednesday 8:00-9:30");
+                System.out.println("- Friday    8:00-9:30");
+                
+                System.out.println("\nBlock B Schedule:");
+                System.out.println("- Tuesday   13:00-14:30");
+                System.out.println("- Thursday  13:00-14:30");
+                System.out.println("- Saturday  10:00-11:30");
+                
+                System.out.print("\nEnter Block (A/B): ");
+                block = scan.nextLine().trim().toUpperCase();
+                if (block.equals("A") || block.equals("B")) {
+                    break;  
                 }
+                System.out.println("Invalid block! Please enter 'A' or 'B'.");
             }
             return new RegularStudent(studentID, name, block);
         } else {
@@ -62,93 +61,77 @@ public class Inputter {
         }
     }
 
+    private boolean isNumeric(String str) {
+        return str.matches("\\d+"); // checks if the string contains only digits
+    }
+    private boolean isValidName(String name) {
+        return name.matches("[a-zA-Z ]+"); // checks if the name contains only letters and spaces
+    }
+
     public Course createCourse() {
-        System.out.println("Enter Course Name: ");
-        String courseName = scan.nextLine();
-    
-        String courseCode = "";
+        System.out.print("Enter Course Name: ");
+        String courseName = scan.nextLine().trim();
+
+        String courseCode;
         while (true) {
-            System.out.println("Enter Course Code (letters and numbers only): ");
-            courseCode = scan.nextLine();
-            if (courseCode.matches("[a-zA-Z0-9]+")) {
+            System.out.print("Enter Course Code: ");
+            courseCode = scan.nextLine().trim();
+            if (!courseCode.isEmpty()) {
                 break;
-            } else {
-                System.out.println("Invalid course code. Please enter letters and numbers only.");
             }
+            System.out.println("Course code cannot be empty!");
         }
-    
-        Course course = new Course(courseName, courseCode, createSchedule());
-    
-        System.out.print("Do you want to add a schedule to this course? (y/n): ");
-        String addSchedule = scan.nextLine();
-        
-        while (addSchedule.equalsIgnoreCase("y")) {
+
+        Course course = new Course(courseName, courseCode);
+
+        System.out.print("Add a schedule? (y/n): ");
+        while (scan.nextLine().equalsIgnoreCase("y")) {
             Schedule schedule = createSchedule();
             course.addSchedule(schedule);
-            System.out.print("Do you want to add another schedule? (y/n): ");
-            addSchedule = scan.nextLine();
+            System.out.print("Add another schedule? (y/n): ");
         }
         return course;
-    }    
+    }
 
     public Schedule createSchedule() {
-        String day = "";
-        String[] validDays = {"Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"};
-        
-        while (true) {
-            System.out.println("Enter Day (e.g., Monday, Tuesday): ");
-            day = scan.nextLine().trim();
-    
-            boolean isValidDay = false;
-            for (String validDay : validDays) {
-                if (day.equalsIgnoreCase(validDay)) {
-                    isValidDay = true;
-                    break;
-                }
-            }
-            if (isValidDay) {
-                break; // exit loop if the user input is valid
-            } else {
-                System.out.println("Invalid input. Please enter a valid day (e.g., Monday, Tuesday).");
-            }
-        }
-    
-        String time = "";
-        while (true) {
-            System.out.println("Enter Time (e.g., 10:00 AM): ");
-            time = scan.nextLine();
-    
-            // Regex to match time format: HH:MM AM/PM
-            if (time.matches("^(0?[1-9]|1[0-2]):[0-5][0-9] ?[AP][M]$")) {
-                break; // Valid time format, exit the loop
-            } else {
-                System.out.println("Invalid input. Please enter a valid time (e.g., 10:00 AM).");
-            }
-        }
-    
-        String block = "";
-        System.out.println("Enter Block: ");
-        block = scan.nextLine();
+        System.out.print("Enter Day: ");
+        String day = scan.nextLine().trim();
+
+        System.out.print("Enter Time: ");
+        String time = scan.nextLine().trim();
+
+        System.out.print("Enter Block: ");
+        String block = scan.nextLine().trim();
+
         return new Schedule(day, time, block);
-    }      
+    }
 
     public double getGradeInput() {
-        double grade = -1;
+        double grade;
         while (true) {
-            System.out.print("Enter Grade (0-100): ");
-            if (scan.hasNextDouble()) {
-                grade = scan.nextDouble();
-                if (grade >= 0 && grade <= 100) { // validate if the inputted grade is only from 0 to 100
+            try {
+                System.out.print("Enter Grade (1.00 - 5.00): ");
+                grade = Double.parseDouble(scan.nextLine().trim());
+                if (isValidCollegeGrade(grade)) {
                     break;
                 } else {
-                    System.out.println("Invalid input. Please enter a grade between 0 and 100.");
+                    System.out.println("Invalid grade! Please enter a valid college grade.");
                 }
-            } else {
-                System.out.println("Invalid input. Please enter a valid number.");
-                scan.next();
+            } catch (NumberFormatException e) {
+                System.out.println("Invalid input! Please enter a valid number.");
             }
         }
         return grade;
+    }
+
+    private boolean isValidCollegeGrade(double grade) {
+        double[] validGrades = {1.0, 1.25, 1.5, 1.75, 2.0, 2.25, 2.5, 2.75, 3.0, 5.0};
+        for (double validGrade : validGrades) {
+            if (Double.compare(grade, validGrade) == 0) {
+                return true;
+            }
+        }
+        return false;
     }
 
     public void close() {
